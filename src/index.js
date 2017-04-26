@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
-import firebase from 'firebase'
+import * as firebase from 'firebase'
 
+var config = {
+  apiKey: "AIzaSyBr9wGS-JzixSHSMJpdVXGz-DyUPjlNdNg",
+  authDomain: "mapa-de-startup.firebaseapp.com",
+  databaseURL: "https://mapa-de-startup.firebaseio.com",
+  projectId: "mapa-de-startup",
+  storageBucket: "mapa-de-startup.appspot.com",
+  messagingSenderId: "562968674625"
+};
+firebase.initializeApp(config);
 
-var Main = React.createClass({
-  mapaStartup: function() {
+class Main extends React.Component{
+  mapaStartup() {
     
       // Shortcuts to DOM Elements.
       var razao = document.getElementById('razao');
@@ -21,7 +30,9 @@ var Main = React.createClass({
       var investidores = document.getElementById('investidores');
       var capital = document.getElementById('capital');
 
-      firebase.database().ref('company/' +  cnpj.value).set({
+     
+
+      firebase.database().ref('company/').push({
         razao:  razao.value,
         cnpj:  cnpj.value,
         localizacao:  localizacao.value,
@@ -35,76 +46,78 @@ var Main = React.createClass({
         faturamento:  faturamento.value,
         investidores:  investidores.value,
         capital:  capital.value,
-      })
+      });
+      
     
-  },
-  render: function(){
+  }
+
+  render(){
     return (
-      <form>
+      <div>
         <div>
-            <label for="razao">Razão:</label>
+            <label htmlFor="razao">Razão:</label>
             <input type="text" id="razao" />
         </div>
         <div>
-            <label for="cnpj">CNPJ:</label>
+            <label htmlFor="cnpj">CNPJ:</label>
             <input type="text" id="cnpj" />
         </div>
         <div>
-            <label for="localizacao">Localização:</label>
+            <label htmlFor="localizacao">Localização:</label>
             <input type="text" id="localizacao" />
         </div>
           <div>
-            <label for="site">Site:</label>
+            <label htmlFor="site">Site:</label>
             <input type="text" id="site" />
         </div>
         <div>
-            <label for="colaboradores">Número de colaboradores:</label>
+            <label htmlFor="colaboradores">Número de colaboradores:</label>
             <input type="text" id="colaboradores" />
         </div>
         <div>
-            <label for="data-inicio">Data de início:</label>
+            <label htmlFor="data-inicio">Data de início:</label>
             <input type="text" id="data-inicio" />
         </div>
         <div>
-            <label for="area-atuacao">Área de atuação:</label>
+            <label htmlFor="area-atuacao">Área de atuação:</label>
             <input type="text" id="area-atuacao" />
         </div>
         <div>
-            <label for="logo">Logo Upload:</label>
+            <label htmlFor="logo">Logo Upload:</label>
             <input type="text" id="logo" />
         </div>
         <div>
-            <label for="situacao">Situação de atividade:</label>
+            <label htmlFor="situacao">Situação de atividade:</label>
             <input type="text" id="situacao" />
         </div>
           <div>
-            <label for="produto">Principal Produto:</label>
+            <label htmlFor="produto">Principal Produto:</label>
             <input type="text" id="produto" />
         </div>
         <div>
-            <label for="publico">Público Alvo:</label>
+            <label htmlFor="publico">Público Alvo:</label>
             <input type="text" id="publico" />
         </div>
         <div>
-            <label for="faturamento">Faturamento Anual:</label>
+            <label htmlFor="faturamento">Faturamento Anual:</label>
             <input type="text" id="faturamento" />
         </div>
         <div>
-            <label for="investidores">Investidores:</label>
+            <label htmlFor="investidores">Investidores:</label>
             <input type="text" id="investidores" />
         </div>
         <div>
-            <label for="capital">Capital Primário:</label>
+            <label htmlFor="capital">Capital Primário:</label>
             <input type="text" id="capital" />
         </div>
         <div>   
-            <button class="btn btn-lg btn-primary btn-block" onClick={this.mapaStartup} type="submit">Sign in</button>
+            <button onClick={this.mapaStartup.bind()}>Submit</button>
         </div>
-	  </form>
+	  </div>
     )
   }
   
-});
+}
 
 
 
