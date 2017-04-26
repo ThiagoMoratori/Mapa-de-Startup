@@ -1,13 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import firebase from 'firebase'
 
 
+var Main = React.createClass({
+  mapaStartup: function() {
+    
+      // Shortcuts to DOM Elements.
+      var razao = document.getElementById('razao');
+      var cnpj = document.getElementById('cnpj');
+      var localizacao = document.getElementById('localizacao');
+      var site = document.getElementById('site');
+      var datainicio = document.getElementById('data-inicio');
+      var areaatuacao = document.getElementById('area-atuacao');
+      var logo = document.getElementById('logo');
+      var situacao = document.getElementById('situacao');
+      var produto = document.getElementById('produto');
+      var publico = document.getElementById('publico');
+      var faturamento = document.getElementById('faturamento');
+      var investidores = document.getElementById('investidores');
+      var capital = document.getElementById('capital');
 
-
-var HelloWorld = React.createClass({
+      firebase.database().ref('company/' +  cnpj.value).set({
+        razao:  razao.value,
+        cnpj:  cnpj.value,
+        localizacao:  localizacao.value,
+        site:  site.value,
+        datainicio:  datainicio.value,
+        areaatuacao:  areaatuacao.value,
+        logo:  logo.value,
+        situacao:  situacao.value,
+        produto:  produto.value,
+        publico:  publico.value,
+        faturamento:  faturamento.value,
+        investidores:  investidores.value,
+        capital:  capital.value,
+      })
+    
+  },
   render: function(){
     return (
-      <form action="/pagina-processa-dados-do-form" method="post">
+      <form>
         <div>
             <label for="razao">Razão:</label>
             <input type="text" id="razao" />
@@ -65,50 +98,14 @@ var HelloWorld = React.createClass({
             <input type="text" id="capital" />
         </div>
         <div>   
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" onClick={this.mapaStartup} type="submit">Sign in</button>
         </div>
 	  </form>
     )
   }
+  
 });
 
-function MapaStartup() {
-  this.checkSetup();
-
-  // Shortcuts to DOM Elements.
-  this.razao = document.getElementById('razao');
-  this.cnpj = document.getElementById('cnpj');
-  this.localizacao = document.getElementById('localizacao');
-  this.site = document.getElementById('site');
-  this.datainicio = document.getElementById('data-inicio');
-  this.areaatuacao = document.getElementById('area-atuacao');
-  this.logo = document.getElementById('logo');
-  this.situacao = document.getElementById('situacao');
-  this.produto = document.getElementById('produto');
-  this.publico = document.getElementById('publico');
-  this.faturamento = document.getElementById('faturamento');
-  this.investidores = document.getElementById('investidores');
-  this.capital = document.getElementById('capital');
-
-  // Saves message on form submit.
-  this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
-  this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
-
-  // Toggle for the button.
-  var buttonTogglingHandler = this.toggleButton.bind(this);
-  this.messageInput.addEventListener('keyup', buttonTogglingHandler);
-  this.messageInput.addEventListener('change', buttonTogglingHandler);
-
-  // Events for image upload.
-  this.submitImageButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    this.mediaCapture.click();
-  }.bind(this));
-  this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
-
-  this.initFirebase();
-}
 
 
-ReactDOM.render(<HelloWorld />, document.getElementById('root'));
+ReactDOM.render(<Main />, document.getElementById('root'));
